@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>江浙沪水利设计咨询招投标信息平台 · 中润智水</title>
+<style>
+:root {
+  --primary: #1677ff;
+  --primary-dark: #0958d9;
+  --primary-light: #e6f4ff;
+  --bg: #f5f7fa;
+  --white: #fff;
+  --border: #e8e8e8;
+  --text: #1a1a2e;
+  --text-secondary: #666;
+  --text-light: #999;
+  --tag-zj: #e6f4ff;
+  --tag-zj-txt: #1677ff;
+  --tag-js: #f6ffed;
+  --tag-js-txt: #52c41a;
+  --tag-sh: #fff7e6;
+  --tag-sh-txt: #fa8c16;
+  --tag-open-bg: #f6ffed;
+  --tag-open-txt: #52c41a;
+  --tag-closed-bg: #f5f5f5;
+  --tag-closed-txt: #999;
+  --tag-new-bg: #fff1f0;
+  --tag-new-txt: #ff4d4f;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ====== Top Banner ====== */
+.top-banner {
+  background: linear-gradient(135deg, #0958d9 0%, #1677ff 40%, #4096ff 100%);
+  color: white;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(22,119,255,0.25);
+}
+.banner-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.banner-left { display: flex; align-items: center; gap: 14px; }
+.banner-logo {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.banner-title { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; }
+.banner-sub { font-size: 0.75rem; opacity: 0.80; }
+.banner-right { display: flex; align-items: center; gap: 12px; font-size: 0.78rem; }
+.banner-right .update-badge {
+  background: rgba(255,255,255,0.18);
+  padding: 5px 14px;
+  border-radius: 16px;
+  display: flex; align-items: center; gap: 4px;
+  white-space: nowrap;
+}
+.banner-right .today-new {
+  background: #ff4d4f;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.72rem;
+  display: none;
+}
+
+/* ====== Stats Row ====== */
+.stats-row {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 24px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.stat-item {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s;
+  cursor: default;
+}
+.stat-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.stat-item .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+.stat-item .stat-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+.stat-item .stat-sub { font-size: 0.7rem; color: var(--text-light); }
+.stat-item.active-stat { border: 2px solid var(--primary); }
+
+/* ====== Main Container ====== */
+.container { max-width: 1320px; margin: 0 auto; padding: 16px 24px 40px; }
+
+/* ====== Search Hero ====== */
+.search-hero {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.search-row {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+}
+.search-input-wrap {
+  flex: 1; min-width: 280px; position: relative;
+}
+.search-input-wrap .search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 1rem; color: var(--text-light); pointer-events: none;
+}
+.search-input-wrap input {
+  width: 100%; padding: 11px 16px 11px 40px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+}
+.search-input-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.search-row .btn-search {
+  padding: 11px 24px; background: var(--primary); color: white;
+  border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s; white-space: nowrap;
+}
+.search-row .btn-search:hover { background: var(--primary-dark); }
+.search-row .btn-reset {
+  padding: 11px 18px; background: var(--white); color: var(--text-secondary);
+  border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.9rem;
+  cursor: pointer; white-space: nowrap;
+}
+.search-row .btn-reset:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ====== Filter Chips ====== */
+.filter-section { margin-bottom: 14px; }
+.filter-row {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  background: var(--white); border-radius: 10px;
+  padding: 10px 16px; box-shadow: var(--shadow);
+}
+.filter-label {
+  font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
+  margin-right: 2px; white-space: nowrap;
+}
+.chip {
+  padding: 5px 14px; border-radius: 16px;
+  font-size: 0.8rem; cursor: pointer; transition: all 0.15s;
+  border: 1px solid var(--border); background: var(--white);
+  color: var(--text-secondary); white-space: nowrap;
+  user-select: none;
+}
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.chip.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
+.chip-region-zj { border-left: 3px solid var(--tag-zj-txt); }
+.chip-region-js { border-left: 3px solid var(--tag-js-txt); }
+.chip-region-sh { border-left: 3px solid var(--tag-sh-txt); }
+.chip-region-zj:hover, .chip-region-zj.active { background: var(--tag-zj-txt); border-color: var(--tag-zj-txt); color: white; }
+.chip-region-js:hover, .chip-region-js.active { background: var(--tag-js-txt); border-color: var(--tag-js-txt); color: white; }
+.chip-region-sh:hover, .chip-region-sh.active { background: var(--tag-sh-txt); border-color: var(--tag-sh-txt); color: white; }
+
+.filter-divider { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+/* ====== Sort Bar ====== */
+.sort-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+}
+.result-info { font-size: 0.82rem; color: var(--text-secondary); }
+.result-info strong { color: var(--primary); font-size: 1.05rem; }
+.sort-options { display: flex; gap: 6px; }
+.sort-option {
+  padding: 4px 12px; border-radius: 14px; font-size: 0.78rem;
+  cursor: pointer; color: var(--text-secondary); border: 1px solid transparent;
+  transition: all 0.15s; white-space: nowrap;
+}
+.sort-option:hover { color: var(--primary); }
+.sort-option.active { background: var(--primary-light); color: var(--primary); font-weight: 600; border-color: var(--primary); }
+
+/* ====== Project List - Table Style (乙方宝风) ====== */
+.project-table {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 80px 90px 110px 120px 90px;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  gap: 12px;
+}
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 90px 110px 120px 90px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+  align-items: center;
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.table-row:hover { background: #fafcff; }
+.table-row:last-child { border-bottom: none; }
+
+.table-row .col-title {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.col-title .main-title {
+  font-size: 0.92rem; font-weight: 600; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; line-height: 1.5;
+}
+.col-title .main-title:hover { color: var(--primary); }
+.col-title .title-sub {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+}
+.col-title .title-sub .mini-tag {
+  padding: 1px 8px; border-radius: 10px; font-size: 0.68rem;
+  font-weight: 500; white-space: nowrap;
+}
+.mt-zj { background: var(--tag-zj); color: var(--tag-zj-txt); }
+.mt-js { background: var(--tag-js); color: var(--tag-js-txt); }
+.mt-sh { background: var(--tag-sh); color: var(--tag-sh-txt); }
+
+.col-cat { font-size: 0.8rem; color: var(--text-secondary); text-align: center; }
+.col-cat .cat-badge {
+  display: inline-block; padding: 2px 10px; border-radius: 10px;
+  font-size: 0.72rem; font-weight: 600;
+}
+.cat-water { background: #e6f4ff; color: #0958d9; }
+.cat-flood { background: #fff0f6; color: #c41d7f; }
+.cat-land { background: #f6ffed; color: #389e0d; }
+.cat-river { background: #fff7e6; color: #d46b08; }
+.cat-review { background: #f9f0ff; color: #722ed1; }
+
+.col-budget { font-size: 0.82rem; font-weight: 600; color: #d46b08; text-align: center; }
+.col-purchaser { font-size: 0.78rem; color: var(--text-secondary); text-align: center; }
+.col-deadline { text-align: center; }
+.col-deadline .dl-date { font-size: 0.82rem; font-weight: 600; }
+.col-deadline .dl-urgent { font-size: 0.68rem; color: #ff4d4f; }
+.col-source { text-align: center; }
+.col-source .src-link {
+  font-size: 0.75rem; color: var(--primary); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 3px;
+}
+.col-source .src-link:hover { text-decoration: underline; }
+
+.status-tag {
+  display: inline-block; padding: 2px 10px; border-radius: 10px;
+  font-size: 0.7rem; font-weight: 600;
+}
+.st-open { background: #f6ffed; color: #389e0d; }
+.st-closed { background: #f5f5f5; color: #999; }
+.st-new { background: #fff1f0; color: #ff4d4f; }
+
+/* ====== Mobile responsive: switch to card layout ====== */
+@media (max-width: 900px) {
+  .table-header { display: none; }
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 16px;
+  }
+  .col-cat, .col-budget, .col-purchaser, .col-deadline, .col-source {
+    text-align: left;
+  }
+  .col-title .main-title { font-size: 0.95rem; }
+  .col-budget { font-size: 0.85rem; }
+  .table-row .meta-row {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  }
+  .search-row { flex-direction: column; }
+  .search-input-wrap { min-width: 100%; }
+  .filter-row { flex-direction: column; align-items: flex-start; }
+  .filter-divider { display: none; }
+}
+
+/* ====== Detail Drawer ====== */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+.overlay.show { display: block; }
+.drawer {
+  position: fixed; top: 0; right: -500px; width: 480px; max-width: 90vw;
+  height: 100vh; background: var(--white); z-index: 201;
+  transition: right 0.3s ease; overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+}
+.drawer.open { right: 0; }
+.drawer-header {
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: var(--white); z-index: 2;
+}
+.drawer-header h3 { font-size: 1.05rem; font-weight: 700; }
+.drawer-close {
+  width: 32px; height: 32px; border-radius: 50%; border: none;
+  background: #f5f5f5; font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.drawer-close:hover { background: #e8e8e8; }
+.drawer-body { padding: 20px; }
+.drawer-body .detail-row {
+  display: flex; gap: 10px; margin-bottom: 14px; font-size: 0.9rem;
+}
+.drawer-body .detail-label {
+  min-width: 70px; color: var(--text-light); flex-shrink: 0;
+}
+.drawer-body .detail-value { color: var(--text); word-break: break-all; }
+.drawer-body .detail-desc {
+  background: #fafafa; border-radius: 8px; padding: 14px;
+  font-size: 0.88rem; line-height: 1.8; color: var(--text-secondary);
+  margin: 16px 0;
+}
+.drawer-body .detail-source {
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+}
+.drawer-body .detail-source a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; background: var(--primary); color: white;
+  border-radius: 8px; text-decoration: none; font-size: 0.9rem;
+  font-weight: 600;
+}
+.drawer-body .detail-source a:hover { background: var(--primary-dark); }
+
+/* ====== Footer ====== */
+.footer {
+  max-width: 1320px; margin: 30px auto 20px; padding: 0 24px;
+  text-align: center; color: var(--text-light); font-size: 0.73rem;
+  border-top: 1px solid var(--border); padding-top: 18px;
+}
+.footer a { color: var(--primary); }
+
+/* Loading */
+.loading-wrap { text-align: center; padding: 60px; }
+.spinner {
+  width: 36px; height: 36px; border: 3px solid var(--border);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin 0.7s linear infinite; margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ====== Top Banner ====== -->
+<div class="top-banner">
+  <div class="banner-inner">
+    <div class="banner-left">
+      <div class="banner-logo">🌊</div>
+      <div>
+        <div class="banner-title">江浙沪水利设计咨询招投标信息平台</div>
+        <div class="banner-sub">中润智水（上海）工程设计有限公司 · 乙方宝式信息聚合</div>
+      </div>
+    </div>
+    <div class="banner-right">
+      <span class="today-new" id="todayNewBadge">🔥 今日新增 <span id="todayNewCount">0</span></span>
+      <span class="update-badge" id="updateBadge">🔄 加载中...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ====== Stats ====== -->
+<div class="stats-row" id="statsRow"></div>
+
+<!-- ====== Main ====== -->
+<div class="container">
+
+  <!-- Search -->
+  <div class="search-hero">
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜索项目名称、城市、采购人、项目类型...">
+      </div>
+      <button class="btn-search" onclick="doSearch()">搜索</button>
+      <button class="btn-reset" onclick="resetAll()">清除筛选</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <div class="filter-row">
+      <span class="filter-label">🌍 地区</span>
+      <span class="chip active" data-region="all">全部</span>
+      <span class="chip chip-region-zj" data-region="浙江">浙江</span>
+      <span class="chip chip-region-js" data-region="江苏">江苏</span>
+      <span class="chip chip-region-sh" data-region="上海">上海</span>
+      <span class="filter-divider"></span>
+      <span class="filter-label">🏷️ 类型</span>
+      <span class="chip active" data-category="all">全部</span>
+      <span class="chip" data-category="水保">水保</span>
+      <span class="chip" data-category="防洪">防洪</span>
+      <span class="chip" data-category="土地整治">土地整治</span>
+      <span class="chip" data-category="河道设计">河道设计</span>
+      <span class="chip" data-category="施工图审查">施工图审查</span>
+      <span class="filter-divider"></span>
+      <span class="filter-label">📌 状态</span>
+      <span class="chip active" data-status="all">全部</span>
+      <span class="chip" data-status="招标中">招标中</span>
+      <span class="chip" data-status="已截止">已截止</span>
+    </div>
+  </div>
+
+  <!-- Sort + Count -->
+  <div class="sort-bar">
+    <div class="result-info">共 <strong id="resultCount">0</strong> 条标讯</div>
+    <div class="sort-options">
+      <span class="sort-option active" data-sort="date">最新发布</span>
+      <span class="sort-option" data-sort="deadline">即将截止</span>
+      <span class="sort-option" data-sort="budget">预算金额</span>
+    </div>
+  </div>
+
+  <!-- Project Table -->
+  <div class="project-table" id="projectTable">
+    <div class="table-header">
+      <span>项目名称</span><span>类型</span><span>预算</span><span>采购人</span><span>截止日期</span><span>来源</span>
+    </div>
+    <div id="projectList"><div class="loading-wrap"><div class="spinner"></div><p>加载中...</p></div></div>
+  </div>
+
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="empty-icon">📭</div>
+    <p>没有匹配的项目</p>
+    <p style="font-size:0.8rem;color:var(--text-light)">试试调整筛选条件或关键词</p>
+  </div>
+
+</div>
+
+<!-- ====== Footer ====== -->
+<div class="footer">
+  <p>📌 数据来源：浙江省公共资源交易平台 · 江苏省公共资源交易网 · 上海市政府采购网 · 中国政府采购网 · 各水利厅/水务局官网</p>
+  <p style="margin-top:4px;">⚠️ 信息仅供参考，请以各平台官方公告为准。投标前务必前往源站核实。</p>
+  <p style="margin-top:4px;">Powered by 中润智水（上海）工程设计有限公司 | 托管于 <a href="https://pages.github.com" target="_blank">GitHub Pages</a> · 数据每日自动更新</p>
+</div>
+
+<!-- ====== Detail Drawer ====== -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h3>📋 项目详情</h3>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<script>
+(function() {
+  let allProjects = [];
+  let filters = { region: 'all', category: 'all', status: 'all', sort: 'date', search: '' };
+
+  function getCatClass(cat) {
+    const m = {'水保':'water','防洪':'flood','土地整治':'land','河道设计':'river','施工图审查':'review'};
+    return m[cat] || 'water';
+  }
+  function getRegionClass(r) {
+    const m = {'浙江':'zj','江苏':'js','上海':'sh'};
+    return m[r] || 'zj';
+  }
+  function getDaysLeft(dl) {
+    if (!dl || dl === '已截止' || dl === '详见招标文件') return null;
+    try {
+      const d = new Date(dl);
+      const now = new Date(); now.setHours(0,0,0,0);
+      const diff = Math.ceil((d - now) / 86400000);
+      return diff;
+    } catch(e) { return null; }
+  }
+  function isToday(d) {
+    if (!d) return false;
+    const now = new Date();
+    const pd = new Date(d);
+    return pd.toDateString() === now.toDateString();
+  }
+
+  function renderStats(projects) {
+    const zj = projects.filter(p => p.region === '浙江').length;
+    const js = projects.filter(p => p.region === '江苏').length;
+    const sh = projects.filter(p => p.region === '上海').length;
+    const open = projects.filter(p => p.status === '招标中').length;
+    const today = projects.filter(p => isToday(p.publishDate)).length;
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-item"><div class="stat-num">${projects.length}</div><div class="stat-label">📋 标讯总数</div></div>
+      <div class="stat-item"><div class="stat-num" style="color:#52c41a">${open}</div><div class="stat-label">🟢 招标中</div></div>
+      <div class="stat-item"><div class="stat-num" style="color:#ff4d4f">${today}</div><div class="stat-label">🔥 今日新增</div></div>
+      <div class="stat-item"><div class="stat-num">${zj}</div><div class="stat-label">📍 浙江</div></div>
+      <div class="stat-item"><div class="stat-num">${js}</div><div class="stat-label">📍 江苏</div></div>
+      <div class="stat-item"><div class="stat-num">${sh}</div><div class="stat-label">📍 上海</div></div>
+    `;
+    const badge = document.getElementById('todayNewBadge');
+    const cnt = document.getElementById('todayNewCount');
+    cnt.textContent = today;
+    badge.style.display = today > 0 ? 'inline-flex' : 'none';
+  }
+
+  function sortProjects(projs) {
+    const s = filters.sort;
+    return [...projs].sort((a, b) => {
+      if (s === 'date') return new Date(b.publishDate) - new Date(a.publishDate);
+      if (s === 'deadline') {
+        const da = getDaysLeft(a.deadline);
+        const db = getDaysLeft(b.deadline);
+        if (da === null && db === null) return 0;
+        if (da === null) return 1;
+        if (db === null) return -1;
+        return da - db;
+      }
+      if (s === 'budget') {
+        const pa = parseFloat((a.budget || '').replace(/[^0-9.]/g, '')) || 0;
+        const pb = parseFloat((b.budget || '').replace(/[^0-9.]/g, '')) || 0;
+        return pb - pa;
+      }
+      return 0;
+    });
+  }
+
+  function filterProjects() {
+    let filtered = allProjects;
+    if (filters.region !== 'all') filtered = filtered.filter(p => p.region === filters.region);
+    if (filters.category !== 'all') filtered = filtered.filter(p => p.category === filters.category);
+    if (filters.status !== 'all') filtered = filtered.filter(p => p.status === filters.status);
+    if (filters.search) {
+      const kw = filters.search.toLowerCase();
+      filtered = filtered.filter(p =>
+        (p.title||'').toLowerCase().includes(kw) ||
+        (p.city||'').toLowerCase().includes(kw) ||
+        (p.content||'').toLowerCase().includes(kw) ||
+        (p.purchaser||'').toLowerCase().includes(kw) ||
+        (p.category||'').toLowerCase().includes(kw) ||
+        (p.region||'').toLowerCase().includes(kw)
+      );
+    }
+    filtered = sortProjects(filtered);
+    document.getElementById('resultCount').textContent = filtered.length;
+    renderStats(filtered);
+    renderTable(filtered);
+  }
+
+  function renderTable(projects) {
+    const list = document.getElementById('projectList');
+    const empty = document.getElementById('emptyState');
+    if (projects.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+    } else {
+      empty.style.display = 'none';
+      list.innerHTML = projects.map((p, i) => {
+        const days = getDaysLeft(p.deadline);
+        const isNew = isToday(p.publishDate);
+        let deadlineHtml = '<span class="dl-date" style="color:#999">—</span>';
+        if (p.deadline && p.deadline !== '已截止' && p.deadline !== '详见招标文件') {
+          deadlineHtml = `<span class="dl-date">${p.deadline}</span>`;
+          if (days !== null && days <= 3 && days >= 0) {
+            deadlineHtml += `<br><span class="dl-urgent">⏰ 仅剩${days}天</span>`;
+          }
+        } else if (p.deadline === '已截止') {
+          deadlineHtml = '<span class="dl-date" style="color:#999">已截止</span>';
+        }
+        const stCls = isNew ? 'st-new' : (p.status === '招标中' ? 'st-open' : 'st-closed');
+        const stTxt = isNew ? '今日新增' : p.status;
+        return `
+          <div class="table-row" onclick="openDetail(${i})" title="点击查看详情">
+            <div class="col-title">
+              <span class="main-title">${p.title}</span>
+              <span class="title-sub">
+                <span class="mini-tag mt-${getRegionClass(p.region)}">${p.region}·${p.city}</span>
+                <span class="status-tag ${stCls}">${stTxt}</span>
+              </span>
+            </div>
+            <div class="col-cat"><span class="cat-badge cat-${getCatClass(p.category)}">${p.category}</span></div>
+            <div class="col-budget">${p.budget || '—'}</div>
+            <div class="col-purchaser">${p.purchaser || '—'}</div>
+            <div class="col-deadline">${deadlineHtml}</div>
+            <div class="col-source">
+              <a href="${p.sourceUrl || '#'}" target="_blank" class="src-link" onclick="event.stopPropagation()" title="${p.sourcePlatform}">查看源站 ↗</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  window.openDetail = function(idx) {
+    const p = sortProjects(allProjects.filter(x => {
+      if (filters.region !== 'all' && x.region !== filters.region) return false;
+      if (filters.category !== 'all' && x.category !== filters.category) return false;
+      if (filters.status !== 'all' && x.status !== filters.status) return false;
+      if (filters.search) {
+        const kw = filters.search.toLowerCase();
+        return (x.title||'').toLowerCase().includes(kw)||(x.city||'').toLowerCase().includes(kw)||(x.content||'').toLowerCase().includes(kw)||(x.purchaser||'').toLowerCase().includes(kw)||(x.category||'').toLowerCase().includes(kw)||(x.region||'').toLowerCase().includes(kw);
+      }
+      return true;
+    }))[idx];
+    if (!p) return;
+    document.getElementById('drawerBody').innerHTML = `
+      <h3 style="margin-bottom:16px;font-size:1.05rem">${p.title}</h3>
+      <div class="detail-row"><span class="detail-label">地区</span><span class="detail-value">${p.region} · ${p.city}</span></div>
+      <div class="detail-row"><span class="detail-label">类型</span><span class="detail-value"><span class="cat-badge cat-${getCatClass(p.category)}">${p.category}</span></span></div>
+      <div class="detail-row"><span class="detail-label">状态</span><span class="detail-value">${p.status}</span></div>
+      <div class="detail-row"><span class="detail-label">预算</span><span class="detail-value" style="font-weight:600;color:#d46b08">${p.budget || '详见招标文件'}</span></div>
+      <div class="detail-row"><span class="detail-label">采购人</span><span class="detail-value">${p.purchaser || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">发布时间</span><span class="detail-value">${p.publishDate}</span></div>
+      <div class="detail-row"><span class="detail-label">截止日期</span><span class="detail-value" style="font-weight:600">${p.deadline || '—'}</span></div>
+      <div class="detail-desc">${p.content}</div>
+      <div class="detail-source">
+        <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:8px">📎 信息来源：${p.sourcePlatform}</div>
+        <a href="${p.sourceUrl}" target="_blank">前往源站查看完整公告 ↗</a>
+      </div>
+    `;
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('drawer').classList.add('open');
+  };
+  window.closeDrawer = function() {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('drawer').classList.remove('open');
+  };
+
+  function doSearch() {
+    filters.search = document.getElementById('searchInput').value.trim();
+    filterProjects();
+  }
+
+  function resetAll() {
+    document.getElementById('searchInput').value = '';
+    filters = { region: 'all', category: 'all', status: 'all', sort: 'date', search: '' };
+    document.querySelectorAll('.chip').forEach(c => {
+      const isAll = c.dataset.region === 'all' || c.dataset.category === 'all' || c.dataset.status === 'all';
+      c.classList.toggle('active', isAll);
+    });
+    document.querySelectorAll('.sort-option').forEach(s => s.classList.toggle('active', s.dataset.sort === 'date'));
+    filterProjects();
+  }
+
+  // Init
+  fetch('data.json')
+    .then(r => r.json())
+    .then(data => {
+      allProjects = data.projects;
+      document.getElementById('updateBadge').innerHTML = '🔄 更新于 ' + data.lastUpdate.replace('T', ' ').substring(0,16);
+      filterProjects();
+    })
+    .catch(err => {
+      document.getElementById('projectList').innerHTML = `<div class="empty-state"><div class="empty-icon">❌</div><p>数据加载失败：${err.message}</p><p style="font-size:0.8rem;color:var(--text-light)">请检查 data.json 文件是否存在</p></div>`;
+    });
+
+  // Chip filters
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const group = this.parentElement;
+      group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      if (this.dataset.region !== undefined) filters.region = this.dataset.region;
+      if (this.dataset.category !== undefined) filters.category = this.dataset.category;
+      if (this.dataset.status !== undefined) filters.status = this.dataset.status;
+      filterProjects();
+    });
+  });
+
+  // Sort
+  document.querySelectorAll('.sort-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+      this.classList.add('active');
+      filters.sort = this.dataset.sort;
+      filterProjects();
+    });
+  });
+
+  // Search enter
+  document.getElementById('searchInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  // Keyboard close drawer
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+})();
+</script>
+
+</body>
+</html>
